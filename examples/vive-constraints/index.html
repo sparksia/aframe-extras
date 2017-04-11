@@ -1,0 +1,96 @@
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no,user-scalable=no,maximum-scale=1">
+    <title>Examples • Vive Constraints</title>
+    <script src="../aframe-extras.js"></script>
+    <script>
+AFRAME.registerComponent('constraint', {
+  dependencies: ['dynamic-body'],
+  multiple: true,
+  schema: {
+    type: {default: 'lock', oneOf: ['coneTwist', 'distance', 'hinge', 'lock', 'pointToPoint']},
+    target: {type: 'selector'},
+    maxForce: {default: 1e6, min: 0},
+    collideConnected: {default: true},
+    wakeUpBodies: {default: true},
+    distance: {default: 0, min: 0}
+  },
+
+  init: function () {
+    this.system = this.el.sceneEl.systems.physics;
+    this.constraint = /* {CANNON.Constraint} */ null;
+  },
+
+  remove: function () {
+    if (!this.constraint) return;
+
+    this.system.world.removeConstraint(this.constraint);
+    this.constraint = null;
+  },
+
+  update: function () {
+    var el = this.el,
+        data = this.data,
+        options = AFRAME.utils.extend({}, data.options);
+
+    this.remove();
+
+    if (!el.body || !data.target.body) {
+      (el.body ? data.target : el).addEventListener('body-loaded', this.update.bind(this, {}));
+      return;
+    }
+
+    switch (data.type) {
+      case 'coneTwist': throw new Error('[constraint] Unsupported type.');
+      case 'distance':
+        this.constraint = new CANNON.DistanceConstraint(
+          el.body,
+          data.target.body,
+          options.distance || undefined,
+          options.maxForce
+        );
+        break;
+      case 'hinge': throw new Error('[constraint] Unsupported type.');
+      case 'lock':
+        this.constraint = new CANNON.LockConstraint(el.body, data.target.body, options);
+        break;
+      case 'pointToPoint': throw new Error('[constraint] Unsupported type.');
+    }
+
+    this.system.world.addConstraint(this.constraint);
+  }
+});
+    </script>
+  </head>
+  <body>
+    <a-scene>
+      <!-- Player -->
+      <a-entity camera="userHeight: 1.6" look-controls></a-entity>
+      <a-entity static-body="shape: sphere; sphereRadius: 0.02;" vive-controls="hand: left" sphere-collider="objects: .cube;" grab></a-entity>
+      <a-entity static-body="shape: sphere; sphereRadius: 0.02;" vive-controls="hand: right" sphere-collider="objects: .cube;" grab></a-entity>
+
+      <a-box class="cube" width="0.25" height="0.25" depth="0.25" color="cyan"
+             position="0 0.25 -1.5"
+             dynamic-body
+             constraint="type: lock; target: #cube1;"></a-box>
+      <a-box id="cube1" class="cube" dynamic-body position="0 0.25 -1" width="0.5" height="0.5" depth="0.5" color="red"></a-box>
+
+      <a-box class="cube" width="0.25" height="0.25" depth="0.25" color="cyan"
+             position="-1 0.125 -1.5"
+             dynamic-body
+             constraint="type: distance; target: #cube2;"></a-box>
+      <a-box id="cube2" class="cube" dynamic-body position="-1 0.25 -1" width="0.5" height="0.5" depth="0.5" color="green"></a-box>
+      <!-- <a-box id="cube3" class="cube" dynamic-body position="1 0.25 -1" width="0.5" height="0.5" depth="0.5" color="blue"></a-box> -->
+
+      <!-- Terrain -->
+      <a-grid static-body></a-grid>
+
+      <!-- Lighting -->
+      <a-entity light="type: point; color: #f4f4f4; intensity: 0.2; distance: 0" position="8 10 18"></a-entity>
+      <a-entity light="type: point; color: #f4f4f4; intensity: 0.6; distance: 0" position="-8 10 -18"></a-entity>
+      <a-entity light="type: ambient; color: #f4f4f4; intensity: 0.4;" position="-8 10 -18"></a-entity>
+    </a-scene>
+  </body>
+</html>

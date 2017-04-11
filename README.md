@@ -93,7 +93,7 @@ src
 │   ├── a-grid.js
 │   ├── a-ocean.js
 │   └── a-tube.js
-└── state-machine               <sub><img alt="New" src="https://img.shields.io/badge/status-new-green.svg"></sub>
+└── <b>state-machine/</b> (<a href="/src/state-machine">Documentation</a>) <sub><img alt="New" src="https://img.shields.io/badge/status-new-green.svg"></sub>
     ├── a-state.js
     ├── end-set.js
     ├── index.js
