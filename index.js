@@ -4,6 +4,7 @@ module.exports = {
   misc:       require('./src/misc'),
   physics:    require('aframe-physics-system'),
   primitives: require('./src/primitives'),
+  'state-machine': require('./src/state-machine'),
 
   registerAll: function () {
     this.controls.registerAll();
@@ -11,5 +12,6 @@ module.exports = {
     this.misc.registerAll();
     this.physics.registerAll();
     this.primitives.registerAll();
+    this['state-machine'].registerAll();
   }
 };

@@ -85,11 +85,19 @@ src
 │   ├── grab.js
 │   ├── jump-ability.js
 │   ├── kinematic-body.js       <sub><img alt="Experimental" src="https://img.shields.io/badge/status-experimental-orange.svg"></sub>
+│   ├── proximity-emitter.js    <sub><img alt="New" src="https://img.shields.io/badge/status-new-green.svg"></sub>
 │   ├── sphere-collider.js
 │   └── toggle-velocity.js
 ├── <b>physics/</b> (<a href="https://github.com/donmccurdy/aframe-physics-system">Moved to aframe-physics-system</a>)
-└── <b>primitives/</b> (<a href="/src/primitives">Documentation</a>)
-    ├── a-grid.js
-    ├── a-ocean.js
-    └── a-tube.js
+├── <b>primitives/</b> (<a href="/src/primitives">Documentation</a>)
+│   ├── a-grid.js
+│   ├── a-ocean.js
+│   └── a-tube.js
+└── state-machine               <sub><img alt="New" src="https://img.shields.io/badge/status-new-green.svg"></sub>
+    ├── a-state.js
+    ├── end-set.js
+    ├── index.js
+    ├── start-set.js
+    ├── state-machine.js
+    └── transition.js
 </pre>
