@@ -23,12 +23,14 @@
              proximity-emitter="filter: [camera]; distance: 4; event: proximity;"
              state-machine="initial: cleared">
         <a-state name="cleared"
-                 start-set="property: color; value: #39BB82;"
-                 transition="state: active; on: proximitystart;">
+                 state-added="set: color; to: #39BB82;"
+                 transition="state: active;
+                             on: proximitystart;">
         </a-state>
         <a-state name="active"
-                 start-set="property: color; value: #FF0000;"
-                 transition="state: cleared; on: proximityend;">
+                 state-added="set: color; to: #FF0000;"
+                 transition="state: cleared;
+                             on: proximityend;">
         </a-state>
       </a-box>
       <a-box id="box2"
@@ -38,12 +40,14 @@
              proximity-emitter="filter: [camera]; distance: 4; event: proximity;"
              state-machine="initial: cleared">
         <a-state name="cleared"
-                 start-set="property: color; value: #39BB82;"
-                 transition="state: active; on: proximitystart;">
+                 state-added="set: color; to: #39BB82;"
+                 transition="state: active;
+                             on: proximitystart;">
         </a-state>
         <a-state name="active"
-                 start-set="property: color; value: #0000FF;"
-                 transition="state: cleared; on: proximityend;">
+                 state-added="set: color; to: #0000FF;"
+                 transition="state: cleared;
+                             on: proximityend;">
         </a-state>
       </a-box>
 

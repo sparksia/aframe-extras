@@ -7,16 +7,16 @@ var Component = {
     this.state = data.initial;
   },
   remove: function () {
-    this.getStateEl().emit(this.state + 'stateend');
+    this.el.removeState(this.state);
     this.state = '';
   },
   getState: function () {
     return this.state;
   },
   setState: function (state) {
-    this.getStateEl().emit(this.state + 'stateend');
+    this.el.removeState(this.state);
     this.state = state;
-    this.getStateEl().emit(this.state + 'statestart');
+    this.el.addState(this.state);
   },
   getStateEl: function () {
     if (!this.state) return null;
