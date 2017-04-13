@@ -1,7 +1,8 @@
+var EventFilter = require('./EventFilter');
+
 module.exports = {
   schema: {
     on: {default: ''},
-    where: {default: ''},
     state: {default: ''}
   },
   init: function () {
@@ -13,17 +14,21 @@ module.exports = {
     var el = machine.el;
     var data = this.data;
 
-    if (data.on !== prevData.on) {
-      if (prevData.on) el.removeEventListener(prevData.on, this.fire);
-      if (data.on) el.addEventListener(data.on, this.fire);
+    var filter = EventFilter.parse(data.on);
+    var prevFilter = EventFilter.parse(prevData.on);
+
+    if (filter !== prevFilter) {
+      if (prevFilter) prevFilter.unlisten(el, this.fire);
+      if (filter) filter.listen(el, this.fire);
     }
   },
-  fire: function (e) {
+  remove: function () {
+    var filter = EventFilter.parse(this.data.on);
+    if (filter) filter.unlisten(this.el, this.fire);
+  },
+  fire: function () {
     var stateMachine = this.system.getStateMachine(this);
     var data = this.data;
-    if (data.where) {
-      throw new Error('[transition] Conditional transitions not implemented.');
-    }
     stateMachine.setState(data.state);
   }
 };
