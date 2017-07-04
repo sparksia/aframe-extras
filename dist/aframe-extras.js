@@ -22910,7 +22910,8 @@ function getMeshes (object) {
   return meshes;
 }
 
-},{"./lib/THREE.quickhull":109,"cannon":111}],109:[function(require,module,exports){
+}
+{"./lib/THREE.quickhull":109,"cannon":111}],109:[function(require,module,exports){
 /**
 
   QuickHull
