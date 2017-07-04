@@ -22851,6 +22851,11 @@ function getGeometry (object) {
         tmp.fromBufferGeometry(meshes[0].geometry);
       }
     } else {
+    if (meshes[0].geometry instanceof THREE.BufferGeometry) {
+      if (meshes[0].geometry.attributes.position) {
+        tmp.fromBufferGeometry(meshes[0].geometry);
+      }
+    } else {
       tmp = meshes[0].geometry.clone();
     }
     tmp.metadata = meshes[0].geometry.metadata;
